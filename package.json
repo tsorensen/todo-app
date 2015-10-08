@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tsorensen/todo-app/issues"
   },
-  "homepage": "https://github.com/tsorensen/todo-app#readme"
+  "homepage": "https://github.com/tsorensen/todo-app#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
 }
