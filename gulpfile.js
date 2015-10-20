@@ -6,6 +6,7 @@ var uglify      = require('gulp-uglify');
 var sourcemaps  = require('gulp-sourcemaps');
 var htmlmin     = require('gulp-htmlmin');
 var express     = require('express');
+var livereload  = require('gulp-livereload');
 
 gulp.task('default', [
   'scripts',
@@ -18,7 +19,9 @@ gulp.task('watch', [
   'scripts.watch',
   'styles.watch',
   'static.watch',
-  'templates.watch'
+  'templates.watch',
+  'server',
+  'livereload'
 ]);
 
 gulp.task('scripts', function() {
@@ -69,4 +72,11 @@ gulp.task('server', function() {
   var app = express();
   app.use(express.static('build'));
   app.listen(8000);
+});
+
+gulp.task('livereload', function(){
+  var server = livereload.listen();
+  gulp.watch('build/**', function(event) {
+    livereload.changed(event);
+  });
 });
