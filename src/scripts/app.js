@@ -9,7 +9,8 @@ angular
       $routeProvider
         .when('/login', {
           templateUrl: '/partials/login-controller.html',
-          controller: 'LoginController'
+          controller: 'LoginController',
+          controllerAs: 'login'
         })
         .otherwise('/login');
     }

@@ -7,8 +7,20 @@
 
   </head>
   <body>
-    <h1>Todo App</h1>
-    <div ng-view></div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            Todo App
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div ng-view></div>
+
+    </div>
 
     <script src="/js/app.min.js"></script>
   </body>
