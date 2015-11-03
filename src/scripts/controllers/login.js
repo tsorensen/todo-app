@@ -2,32 +2,40 @@ angular
   .module('LoginController', [
     'dgmTodo.auth',
     'dgmTodo.users',
+    'toggleDirective',
   ])
   .controller('LoginController', [
     'auth',
     function(auth, users) {
-      this.signin = function(email, password) {
-        console.log('signin');
-        auth.login(email, password)
+      var login = this;
+      login.inputType = 'signin';
+
+      login.submit = function(email, password) {
+        login.errorMessage = null;
+
+        login[login.inputType](email, password)
           .then(function(res) {
-            console.log(res.data);
+            // TODO redirect to the todos page
+            console.log('success');
           })
-          .catch(function(res){
-            console.log('error', res.data);
+          .catch(function(res) {
+            console.log(res.status, res.data);
+            login.errorMessage = res.data.message;
           });
       };
 
-      this.signup = function(email, password) {
-        users
+      login.signin = function(email, password) {
+        return auth.login(email, password);
+      };
+
+      login.signup = function(email, password) {
+        return users
           .create({
             email: email,
             password: password
           })
           .then(function(res) {
-            console.log(res.data);
-          })
-          .catch(function(res) {
-            console.log('error', res.data);
+            return auth.login(email, password);
           });
       };
     },
