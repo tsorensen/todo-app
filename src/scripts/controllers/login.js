@@ -6,9 +6,17 @@ angular
   ])
   .controller('LoginController', [
     'auth',
-    function(auth, users) {
+    'users',
+    '$location',
+    function(auth, users, $location) {
       var login = this;
       login.inputType = 'signin';
+
+      auth.isLoggedIn().then(function(isLoggedIn) {
+        if(isLoggedIn) {
+          $location.url('/todos');
+        }
+      });
 
       login.submit = function(email, password) {
         login.errorMessage = null;
@@ -16,6 +24,7 @@ angular
         login[login.inputType](email, password)
           .then(function(res) {
             // TODO redirect to the todos page
+            $location.url('/todos');
             console.log('success');
           })
           .catch(function(res) {
