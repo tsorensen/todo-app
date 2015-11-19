@@ -10,6 +10,7 @@ angular
     var currentUser;
 
     var auth = {
+
       login: function(email, password) {
         return $http
           .post(host + '/session', {
