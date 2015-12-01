@@ -1,8 +1,18 @@
 <div class="row">
   <div class="col-sm-8 col-sm-offset-2">
-    <h1>Todos</h1>
+    <h3>Todos</h3>
+
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="todoItem in todo.todos">
+        {{ todoItem.name }}
+      </li>
+    </ul>
 
     <form ng-submit="todo.createTodo(todo.create)">
+      <div class="alert alert-danger" ng-show="todo.errorMessage">
+        <p>{{ todo.errorMessage }}</p>
+      </div>
+
       <!-- TODO name -->
       <div class="form-group">
         <label for="name">Name</label>

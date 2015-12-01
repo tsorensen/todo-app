@@ -39,6 +39,7 @@ angular
     resetCreateForm();
 
     self.createTodo = function(data) {
+      self.errorMessage = '';
       var todo = {
         name: data.name,
         description: data.description,
@@ -49,7 +50,7 @@ angular
               }),
       };
 
-      todos.create(self.currentUser.id, data)
+      todos.create(self.currentUser.id, todo)
         .then(function() {
           readTodos();
           resetCreateForm();
@@ -57,6 +58,8 @@ angular
         })
         .catch(function(err) {
           // TODO error handle
+          self.errorMessage = res.data.message;
+          console.log(err);
         });
     };
 
