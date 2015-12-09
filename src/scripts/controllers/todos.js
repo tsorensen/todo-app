@@ -7,11 +7,13 @@ angular
   'auth',
   '$location',
   'todos',
-  function(auth, $location, todos) {
+  function (auth, $location, todos) {
+    'use strict';
+
     var self = this;
 
-    auth.isLoggedIn().then(function(currentUser) {
-      if(!currentUser) {
+    auth.isLoggedIn().then(function (currentUser) {
+      if (!currentUser) {
         $location.url('/login');
       } else {
         self.currentUser = currentUser;
@@ -21,47 +23,46 @@ angular
 
     function readTodos() {
       todos.read(self.currentUser.id)
-        .then(function(todoItems) {
+        .then(function (todoItems) {
           self.todos = todoItems;
         });
     }
 
     function resetCreateForm() {
       self.create = {
-        name: null,
-        description: null,
+        name: '',
+        description: '',
         tags: '',
-        //priority: null,
-        //due-date: null,
       };
     }
-
     resetCreateForm();
 
-    self.createTodo = function(data) {
-      self.errorMessage = '';
+    self.createTodo = function (data) {
+
       var todo = {
         name: data.name,
-        description: data.description,
-        tags: (data.tags || '').split(',').map(function(tag) {
-                return tag.trim();
-              }).filter(function(tag) {
-                return tag;
-              }),
+        description: data.description || 'No Description',
+        tags: (data.tags || '')
+          .split(',')
+          .map(function (tag) {
+            return tag.trim();
+          })
+          .filter(function(tag) {
+            return tag;
+          })
       };
 
       todos.create(self.currentUser.id, todo)
         .then(function() {
           readTodos();
           resetCreateForm();
-          console.log("success");
+          console.log('success');
         })
-        .catch(function(err) {
+        .catch(function(res) {
+          console.log(res.data);
           // TODO error handle
-          self.errorMessage = res.data.message;
-          console.log(err);
         });
     };
 
-  }
+  },
 ]);
